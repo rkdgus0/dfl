@@ -2,7 +2,7 @@ import argparse
 import random
 
 import keras
-from component.USER import USER
+from component.CLIENT import CLIENT
 from component.MEC import MEC
 from component.SERVER import SERVER
 from sklearn.utils import shuffle
@@ -98,9 +98,6 @@ def compose_mec(args, model, edges):
     return MEC(model, mec_client_mapping, edges)
 
 
-def compose_user(args, model, splited_datasets):
-    # todo: (sub) 이 부분 args에 따라 변경 필요.
+def compose_client(args, model, splited_datasets):
 
-    client = USER(args, model, datasets=splited_datasets, epochs=args.n_epochs, batch_size=args.batch_size,device='CUDA:0')
-
-    return client
+    return CLIENT(args, model, datasets=splited_datasets, epochs=args.n_epochs, batch_size=args.batch_size)

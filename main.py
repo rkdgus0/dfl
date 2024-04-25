@@ -74,3 +74,4 @@ t2 = time()
 print(f'Time(sec): {round(t2-t1,2)}')
 
 if __name__ == '__main__':
+#TODO: 글로벌 라운드마다 SCHEDULER 통해서 구현하기

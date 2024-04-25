@@ -2,42 +2,40 @@ import argparse
 import random
 
 import keras
-from component.USER import USER
+from component.CLIENT import CLIENT
 from component.MEC import MEC
 from component.SERVER import SERVER
 from sklearn.utils import shuffle
 import numpy as np
 
 DATA_LIST = ['mnist', 'cifar10']
-MODEL_CHOICES = ['resnet50', 'densenet']
+MODEL_CHOICES = ['mcmahan2NN', 'mcmahanCNN', 'resnet50', 'resnet101', 'densenet121', 'VGG16']
+OPTIMIZER_CHOICES = ['sgd','adam']
 DATA_SPLIT_METHODS = ['random', 'iid', 'non_iid', 'diri']
 CLIENT_MAPPING_METHODS = ['equal', 'diff']
 DELAY_METHODS = ['Fixed', 'Range']
-GLOBAL_MODEL_AVG_METHODS = ['Equal', 'Acc', 'F1macro', 'F1micro', 'n_data', 'FedAT']
+MODEL_AVG_METHODS = ['Equal', 'Acc', 'F1macro', 'F1micro', 'n_data', 'FedAT']
 ADAPTIVE_AGG_METHOD = ['no_adapt', 'Epoch', 'Acc']
 MODEL_DECAY_METHODS = ['Equal', 'Frac']
 
+#TODO: PARSER 수정 사항 있는지 확인하고 위의 리스트 확인해서 필요없는거 쳐내기
 def arg_parsing():
-    parser = argparse.ArgumentParser(description="Standalone training")
+    parser = argparse.ArgumentParser(description="Decentralized FL")
 
     # ----- Federated Learning ----- #
     parser.add_argument("-n_rounds", type=int, default=1000)
     parser.add_argument("-n_users", type=int, default=100)
     parser.add_argument("-n_epochs", type=int, default=1)
+    parser.add_argument("-avg_method", type=str, default="Equal", help="How to average models", choices=MODEL_AVG_METHODS)
 
     # ----- Model Setting ----- #
     parser.add_argument("-model", type=str, default="densenet", choices=MODEL_CHOICES)
+    parser.add_argument("-opt", type=str, default='sgd', choices=OPTIMIZER_CHOICES)
     parser.add_argument("-pre_trained", action='store_true')
     parser.add_argument("-lr", type=float, default=0.075)
     parser.add_argument("-batch_size", type=int, default=32)
     parser.add_argument("-lr_decay", type=float, default=0.99)
     parser.add_argument("-lr_decay_round", type=int, default=5)
-
-    # ----- Hierarchical Setting ----- #
-    parser.add_argument("-num_mec", type=int, default=10)
-    parser.add_argument("-gmodel_avg_method", type=str, default="Equal", help="How to average MEC models", choices=GLOBAL_MODEL_AVG_METHODS)
-    parser.add_argument("-adaptive_agg_method", type=str, default="no_adapt", choices=ADAPTIVE_AGG_METHOD)
-    parser.add_argument("-adaptive_parameter", type=float, default=100)
 
     # ----- Data Setting ----- #
     parser.add_argument("-dataset", type=str, default='cifar10', choices=DATA_LIST)
@@ -45,33 +43,22 @@ def arg_parsing():
     parser.add_argument("-alpha", type=float, default=0.1)
     parser.add_argument("-client_mapping", type=str, default='equal', choices=CLIENT_MAPPING_METHODS)
 
-    # ----- Async Setting ----- #
-    """
-    def mec_delay_def(value):
-        return list(map(int, value.split()))
-    mec_default = '0 0 0 0 1 1 2 2 3 3'
-
-    parser.add_argument("-mec_delays", help='MEC DELAYS', type=mec_delay_def, default=mec_default.split())
-    # parser.add_argument("--mec_delays", type=str, help='MEC DELAYS', default=mec_default) #.split())
-    parser.add_argument("--delay_method", type=str, default="Range", help="How to map delay to MEC",choices=DELAY_METHODS)
-    parser.add_argument("--delay_epoch", type=int, default=0, help="the number of epoch in local client makes a delay")
-    parser.add_argument("--delay_range", type=int, default=2, help="the number of range for MEC delay")
-    parser.add_argument("--model_decay", type=str, default="Equal", help="How to decay according to delay",choices=MODEL_DECAY_METHODS)
-    """
-
     # ----- Debugging Setting ----- #
-    parser.add_argument("--eval_every", type=int, default=5)
-    parser.add_argument("--debug", action='store_true')
+    parser.add_argument("-eval_every", type=int, default=1)
+    parser.add_argument("-debug", action='store_true')
 
     # ----- wandb.ai Setting ----- #
-    parser.add_argument("--exp_name", type=str, default='model_decay')
-    parser.add_argument("--group_name", type=str, required=True)
+    parser.add_argument("-wandb_id", type=str, default='create0327')
+    parser.add_argument("-wandb_api", type=str, default='b2f21ce10a4365a21cfce06ad41f9a7f23d34639', help="check at https://wandb.ai/authorize")
+    parser.add_argument("-exp_name", type=str, required=True)
+    parser.add_argument("-group_name", type=str, required=True)
 
     args = parser.parse_args()
-    # args.mec_delays = mec_delay_def(args.mec_delays)
     print(args)
     return args
 
+#TODO: compose_()들 수정해야함
+#TODO: SCHEDULER/CLIENT 두개로 나눠서 정리하기, 입력 형식 확인하기
 def compose_server(args, model, mecs, data_test):
     delay_method = args.delay_method
     delay_range = args.delay_range
@@ -114,9 +101,6 @@ def compose_mec(args, model, edges):
     return MEC(model, mec_client_mapping, edges)
 
 
-def compose_user(args, model, splited_datasets):
-    # todo: (sub) 이 부분 args에 따라 변경 필요.
+def compose_client(args, model, splited_datasets):
 
-    client = USER(args, model, datasets=splited_datasets, epochs=args.n_epochs, batch_size=args.batch_size,device='CUDA:0')
-
-    return client
+    return CLIENT(args, model, splited_datasets, args.n_epochs, args.batch_size)
