@@ -20,7 +20,7 @@ class SUB_SCHEDULER(BASE):
         for client_idx in clients:
             self.clients.train(client_idx, MEC_MODEL, local_epochs=local_epoch)
             avg_models.append(copy.deepcopy(self.clients.model.get_weights()))
-        self.sub_models[mec_id] = copy.deepcopy(self.average_model(avg_models)) # .set_weights(self.average_model(avg_models))
+        self.MEC_models[mec_id] = copy.deepcopy(self.average_model(avg_models)) # .set_weights(self.average_model(avg_models))
 
         del MEC_MODEL
         avg_models.clear()

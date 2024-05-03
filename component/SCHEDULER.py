@@ -7,18 +7,13 @@ from sklearn.metrics import f1_score
 import numpy as np
 
 class SCHEDULER(BASE):
-    def __init__(self, model, clients, NUM_CLIENT, connect_mapping, test_data, delay_method, delay_range=0, avg_method='Equal', delay_epoch=0, n_epochs=1, model_decay='Equal'):
+    def __init__(self, model, clients, NUM_CLIENT, test_data, avg_method='Equal', n_epochs=1):
         self.model = model
         self.NUM_CLIENT = NUM_CLIENT
-        self.connect_mapping = copy.deepcopy(connect_mapping)
-        self.init_connect_mapping = copy.deepcopy(tuple(connect_mapping))
-        self.delay_method = delay_method
-        self.delay_range = delay_range
         self.clients = clients
         self.test_data = test_data
         self.avg_method = avg_method
         self.n_epochs = n_epochs
-        self.model_decay = model_decay
         self.model.compile(
             loss=keras.losses.CategoricalCrossentropy(),
             metrics=[keras.metrics.CategoricalAccuracy()]
@@ -38,67 +33,52 @@ class SCHEDULER(BASE):
         matrix = np.maximum(matrix, matrix.T)
         return matrix
 
-    
     def train(self):
         uploaded_models = []
         connected_client = []
-        n_connected_client = 0
         connect_mapping = self.set_connect_mapping()
+        print(f"[SCHEDULER] ===== Connecting Map =====")
+        print(connect_mapping)
         
         # Connected Client train
         # Unconnected Client: Local train
         for client_idx in range(self.NUM_CLIENT):
-            avg_models = []
+            model_weights = []
+            #if any(self.connect_mapping[client_idx][connect_idx] == 1 for connect_idx in range(self.NUM_CLIENT)):
             for connect_idx in range(self.NUM_CLIENT):
-                if self.connect_mapping[client_idx][connect_idx] == 1:
-#TODO: CLIENT_MODEL은 get_weight로 가중치를 줘야함. 인덱스는?
-#TODO: CLIENT의 weight을 어떻게 줄 수 있을지 정리
-                    CLIENT_MODEL = copy.deepcopy(self.clients.model)
-                    self.clients.train(connect_idx, CLIENT_MODEL, local_epoch)
-                    avg_models.append(copy.deepcopy(self.clients.model.get_weights()))
+                # client(client_idx)와 연결된 client(connected_idx)는 local update(model.fit).
+                # client(client_idx)는 model_weight에 connected client weight을 aggregate & average.
+                if connect_mapping[client_idx][connect_idx] == 1:
+                    print(f"[SCHEDULER] {client_idx}-device connect with {connect_idx}-device")
+                    model_parameters = self.CLIENT_models[connect_idx]
+                    self.clients.train(connect_idx, model_parameters, self.n_epochs)
+                    model_weights.append(copy.deepcopy(self.clients.model.get_weights()))
 
                     connected_client.append(connect_idx)
-                    n_connected_client[client_idx] += 1
                 else:
                     pass
-            self.CLIENT_models[client_idx] = copy.deepcopy(self.average_model(avg_models))
-            avg_models.clear()
+            avg_ratio = self.calc_avg_ratio(model_weights, connected_client)
+            self.CLIENT_models[client_idx] = copy.deepcopy(self.average_model(model_weights, avg_ratio))
+            model_weights.clear()
 
-            print(f'Connected Clients with {client_idx}-Client: ', *connected_client)
-        
-#TODO: 여기 아래로 avg_atio 주고, set_weight를 하는 방법 정리
-        avg_ratio = self.calc_avg_ratio(uploaded_models, connected_client)
-        if self.model_decay == 'Frac':
-            for idx, client_idx in enumerate(connected_client):
-                avg_ratio[idx] /= (self.init_connect_mapping[client_idx]+1)
-        avg_model = self.average_model(uploaded_models, avg_ratio)
-
-        self.model.set_weights(avg_model)
-        for client_idx in connected_client:
-            self.clients.MEC_models[client_idx] = copy.deepcopy(avg_model) # .set_weights(avg_model)
-
-        uploaded_models.clear()
-        avg_model.clear()
-
+            print(f'Connected Clients with {client_idx}-Client: {connected_client} Clients')
         return
 
-    def test(self, model=None):
+    def clients_test(self):
+        test_result = [{'loss': [], 'acc': []} for _ in range(self.NUM_CLIENT)]
         test_x, test_y = self.test_data
-        # print(self.model.get_weights())
-        if model == None:
-            return self.model.evaluate(test_x, test_y)
-        else:
-            return model.evaluate(test_x, test_y)
+        for client_idx in range(self.NUM_CLIENT):
+            model_parameters = self.CLIENT_models[client_idx]
+            model = copy.deepcopy(self.model)
+            model.set_weights(model_parameters)
+            loss, acc = model.evaluate(test_x, test_y)
+            test_result[client_idx]['loss'] = loss
+            test_result[client_idx]['acc'] = acc
+        return test_result
 
-            # self.model.compile(
-            #     loss=self.loss_fn,
-            #     optimizer=self.opt,
-            #     metrics=[keras.metrics.CategoricalAccuracy()]
-            # )
-            # model.compile(
-            #     loss=keras.losses.CategoricalCrossentropy(),
-            #     metrics=[keras.metrics.CategoricalAccuracy()]
-            # )
+    def test(self):
+        test_x, test_y = self.test_data
+        return self.model.evaluate(test_x, test_y)
 
     def f1_test(self, avg_method):
         test_x, test_y = self.test_data
@@ -113,29 +93,23 @@ class SCHEDULER(BASE):
 
     def calc_avg_ratio(self, models, connected_client):
         ratio = []
-        if self.avg_method == 'Acc':
-            # tmp_model = copy.deepcopy(self.model)
+        if self.avg_method.lower() == 'Acc':
             for model in models:
                 self.model.set_weights(model)
                 loss, acc = self.test()
                 ratio.append(acc)
-        elif 'F1' in self.avg_method:
+        elif 'f1' in self.avg_method.lower():
             for model in models:
                 self.model.set_weights(model)
                 f1_scores = self.f1_test(self.avg_method)
                 ratio.append(f1_scores)
-        elif self.avg_method == 'n_data':
-            for client_idx in connected_client:
-                ratio.append(self.num_mec_data[client_idx])
-
-        elif self.avg_method == 'Equal':
+        elif self.avg_method.lower() == 'n_data':
+            for connect_idx in connected_client:
+                ratio.append(len(self.clients.datasets[connect_idx]['x']))
+        elif self.avg_method.lower() == 'equal':
             ratio = [1]*len(models)
 
         return ratio
-    def calc_local_epoch(self, client_idx):
-        if self.delay_epoch == 0:
-            return self.n_epochs # self.init_connect_mapping[client_idx]
-        else:
-            return max(1, self.init_connect_mapping[client_idx] * self.delay_epoch)
+        
     def set_lr(self, lr):
-        self.clients.clients.set_lr(lr)
+        self.clients.clients.set.lr(lr)

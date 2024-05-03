@@ -1,0 +1,10 @@
+
+Init Model & Dataset
+Time(sec): 3.04
+Init Models
+Traceback (most recent call last):
+  File "/home/gang/dfl/main.py", line 69, in <module>
+    CLIENTS = compose_client(args, model, split_data)
+  File "/home/gang/dfl/Library/util.py", line 66, in compose_client
+    return CLIENT(args, model, datasets, n_epochs, batch_size)
+NameError: name 'CLIENT' is not defined

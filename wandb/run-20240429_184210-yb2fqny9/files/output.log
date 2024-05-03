@@ -1,0 +1,8 @@
+
+Init Model & Dataset
+Traceback (most recent call last):
+  File "/home/gang/dfl/main.py", line 55, in <module>
+    model = define_model(args)
+  File "/home/gang/dfl/Library/models.py", line 103, in define_model
+    raise ValueError("check model name")
+ValueError: check model name

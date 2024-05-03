@@ -2,6 +2,7 @@ import argparse
 import os
 import copy
 import random
+import keras.src
 import keras.src.utils
 
 import tensorflow as tf
@@ -12,11 +13,9 @@ from time import time
 from datetime import datetime
 from concurrent import futures
 
-from Library.helper import *
 from Library.datasets import *
 from Library.util import *
 from Library.models import *
-from Library.Component import SERVER, MEC, USER
 
 import wandb
 
@@ -31,27 +30,29 @@ args = arg_parsing()
 
 # ----- Wandb Setting ----- #
 # Wandb Debug Setting
-if args.debug:
-    mode = 'disabled'
-    group_name = 'DEBUG'
-    run_name = f'Debug_{time()}'
-else:
-    mode = 'online'
-    run_name = args.exp_name
-    group_name = args.group_name
+WANDB = args.wandb
+if WANDB:
+    if args.debug:
+        mode = 'disabled'
+        group_name = 'DEBUG'
+        run_name = f'Debug_{time()}'
+    else:
+        mode = 'online'
+        run_name = args.exp_name
+        group_name = args.group_name
 
-# Wandb login option
-wandb_id = args.wandb_id
-wandb_api = args.wandb_api
-if wandb_api != None:
-    wandb.login(key=f"{wandb_api}")
+    # Wandb login option
+    wandb_id = args.wandb_id
+    wandb_api = args.wandb_api
+    if wandb_api != None:
+        wandb.login(key=f"{wandb_api}")
 
-# Wandb init project & parameter
-wandb.init(project="Gang_Test", mode=mode, group=group_name, entity=f'{wandb_id}', name=run_name)
-wandb.config.update(args)
+    # Wandb init project & parameter
+    wandb.init(project="Gang_Test", mode=mode, group=group_name, entity=f'{wandb_id}', name=run_name)
+    wandb.config.update(args)
 
 # ----- Model/Dataset Setting ----- #
-print("Init Model & Dataset")
+print("[MAIN] ===== Init Model & Dataset =====")
 t1 = time()
 model = define_model(args)
 loss_fn = keras.losses.CategoricalCrossentropy()
@@ -59,19 +60,66 @@ if args.opt == "sgd":
     opt = keras.optimizers.SGD(learning_rate=args.lr)
 elif args.opt == "adam":
     opt = keras.optimizers.Adam(learning_rate=args.lr)
-data_train, data_test = load_dataset(args.dataset)
-split_data = split_data(args.split, data_train, args.n_users, args.alpha)
+train_data, test_data = load_dataset(args.dataset)
+split_data = split_data(args.split, train_data, args.n_users, args.alpha)
 t2 = time()
-print(f'Time(sec): {round(t2-t1,2)}')
+print(f'[MAIN] ===== Time(sec): {round(t2-t1,2)}\n')
 
 # ----- Client Setting ----- #
-print("Init Models")
+print("[MAIN] ===== Init Models =====")
 t1 = time()
-EDGES = compose_user(args, model, split_data)
-MECS = compose_mec(args, model, EDGES)
-SERVER = compose_server(args, model, MECS, data_test)
+CLIENTS = compose_client(args, model, split_data)
+SCHEDULER = compose_scheduler(args, model, CLIENTS, test_data)
 t2 = time()
-print(f'Time(sec): {round(t2-t1,2)}')
+print(f'[MAIN] ===== Time(sec): {round(t2-t1,2)}\n')
 
-if __name__ == '__main__':
-#TODO: 글로벌 라운드마다 SCHEDULER 통해서 구현하기
+# ----- Parameter Setting ----- #
+USE_LR_DECAY = False
+ROUND = args.n_rounds
+NUM_CLIENT = args.n_users
+eval_round = args.eval_round
+dict_df = {'Round': [], 'Client': [], 'TestAcc': []}
+
+if args.lr_decay:
+    lr = args.lr
+    USE_LR_DECAY=True
+
+# ----- Global Round ----- #
+for n_round in range(1, ROUND+1):
+    SCHEDULER.train()
+
+    # ----- Learning rate decay Setting ----- #
+    if USE_LR_DECAY and args.lr_decay and not((n_round+1) % args.lr_decay_round):
+        lr *= args.lr_decay
+        SCHEDULER.set_lr(lr)
+    
+    # ----- Test Result upload ----- #
+    if ((n_round-1) % eval_round == 0) or (n_round >= ROUND - 20):
+        test_result = SCHEDULER.clients_test()
+        
+        for client_idx in range(NUM_CLIENT):
+            dict_df['Round'].append(n_round)
+            dict_df['Client'].append(client_idx)
+            dict_df['TestAcc'].append(round(test_result[client_idx]['acc']*100, 2))
+            print(f"[{client_idx} Client] Round: {n_round}, Loss: {test_result[client_idx]['loss']}, Acc: {test_result[client_idx]['acc']:.2%}")
+        if WANDB:
+            wandb.log({
+                "Test Acc": round(test_result['acc']*100, 2),
+                "Test Loss": round(test_result['loss'], 2),}, 
+                step=n_round)
+    
+    '''
+    if (n_round - 1) % 100 == 0:
+        os.makedirs('./checkpoints', exist_ok=True)
+        SCHEDULER.model.save(f'checkpoints/R:{n_round}_{args.exp_name}')
+    '''
+
+# ----- Result CSV load, wandb log-out ----- #
+df = pd.DataFrame(dict_df)
+os.makedirs('./csv_results', exist_ok=True)
+f_name = f'{time()}_Mo{args.model}_Data{args.dataset}_Pre{args.pre_trained}_R{args.n_rounds}_N{args.n_users}_E{args.n_epochs}_Split{args.split}_Alp{args.alpha}_Delay_{args.delay_method}.csv'
+
+df.to_csv(f'./csv_results/{f_name}')
+if WANDB:
+    wandb.save(f'./csv_results/{f_name}')
+    wandb.finish()
