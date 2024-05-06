@@ -52,14 +52,9 @@ if WANDB:
     wandb.config.update(args)
 
 # ----- Model/Dataset Setting ----- #
-print("[MAIN] ===== Init Model & Dataset =====")
+print(f"[MAIN] ===== Init Model(Opt: {args.opt}) & Dataset =====")
 t1 = time()
 model = define_model(args)
-loss_fn = keras.losses.CategoricalCrossentropy()
-if args.opt == "sgd":
-    opt = keras.optimizers.SGD(learning_rate=args.lr)
-elif args.opt == "adam":
-    opt = keras.optimizers.Adam(learning_rate=args.lr)
 train_data, test_data = load_dataset(args.dataset)
 split_data = split_data(args.split, train_data, args.n_users, args.alpha)
 t2 = time()
@@ -85,8 +80,17 @@ if args.lr_decay:
     USE_LR_DECAY=True
 
 # ----- Global Round ----- #
+print(f"[MAIN] ===== Global Round Start!")
+print(f"[MAIN] ===== Total Round: {ROUND}")
+print(f"[MAIN] ===== Total Client: {NUM_CLIENT}")
+print(f"[MAIN] ===== Model: {args.model}(Pretrained : {args.pre_trained}, Opt: {args.opt})")
+print(f"[MAIN] ===== Learning rate: {args.lr}, learning rate decay: {args.lr_decay}(round: {args.lr_decay_round})")
+print(f"[MAIN] ===== Dataset: {args.dataset}, Data Split: {args.split}")
+print(f"[MAIN] ===== Aggregation Method: {args.avg_method}")
+
 for n_round in range(1, ROUND+1):
     SCHEDULER.train()
+    test_df = {}
 
     # ----- Learning rate decay Setting ----- #
     if USE_LR_DECAY and args.lr_decay and not((n_round+1) % args.lr_decay_round):
@@ -101,12 +105,12 @@ for n_round in range(1, ROUND+1):
             dict_df['Round'].append(n_round)
             dict_df['Client'].append(client_idx)
             dict_df['TestAcc'].append(round(test_result[client_idx]['acc']*100, 2))
+            test_df[f"{client_idx}Client_acc"]=round(test_result[client_idx]['acc']*100, 2)
+            test_df[f"{client_idx}Client_loss"]=round(test_result[client_idx]['loss'], 2)
             print(f"[{client_idx} Client] Round: {n_round}, Loss: {test_result[client_idx]['loss']}, Acc: {test_result[client_idx]['acc']:.2%}")
+            print(f"Test_df : {test_df}")
         if WANDB:
-            wandb.log({
-                "Test Acc": round(test_result['acc']*100, 2),
-                "Test Loss": round(test_result['loss'], 2),}, 
-                step=n_round)
+            wandb.log(test_df, step=n_round)
     
     '''
     if (n_round - 1) % 100 == 0:
@@ -122,4 +126,4 @@ f_name = f'{time()}_Mo{args.model}_Data{args.dataset}_Pre{args.pre_trained}_R{ar
 df.to_csv(f'./csv_results/{f_name}')
 if WANDB:
     wandb.save(f'./csv_results/{f_name}')
-    wandb.finish()
+    #wandb.finish()

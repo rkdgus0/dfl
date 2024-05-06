@@ -8,16 +8,24 @@ import numpy as np
 
 #TODO: 오류 잡으면서 해보기. weight 제대로 들어가는지 확인
 class CLIENT(BASE):
-    def __init__(self, lr, model, datasets, epochs, batch_size):
+    def __init__(self, opt, lr, model, datasets, epochs, batch_size, device):
         self.datasets = datasets
         self.epochs = epochs
         self.batch_size = batch_size
+        self.device = device
         self.model = deepcopy(model)
         self.origin_lr = lr
-        self.model.compile(
-            loss=keras.losses.CategoricalCrossentropy(),
-            optimizer=keras.optimizers.SGD(learning_rate=self.origin_lr, clipvalue=1.0)
-        )
+        self.opt = opt.lower()
+        if self.opt == 'sgd':
+            self.model.compile(
+                loss=keras.losses.CategoricalCrossentropy(),
+                optimizer=keras.optimizers.SGD(learning_rate=self.origin_lr, clipvalue=1.0)
+            )
+        elif self.opt == 'adam':
+            self.model.compile(
+                loss=keras.losses.CategoricalCrossentropy(),
+                optimizer=keras.optimizers.Adam(learning_rate=self.origin_lr, clipvalue=1.0)
+            )
         #self.model.compile(
         #    loss=CategoricalCrossentropy(),
         #    optimizer=gradient_descent_v2.SGD(learning_rate=self.origin_lr, clipvalue=1.0)
@@ -28,21 +36,23 @@ class CLIENT(BASE):
     # client_idx(int): client index
     # model_parameters(tf.Tensor): serialized model parameters
     def train(self, client_idx, model_parameters, local_epochs=1):
-        print("[Client] ===== Local Train Start! ======")
-        #print(f"[Client] model parameter:")
-        #print(model_parameters)
         self.model.set_weights(model_parameters)
-        print("[CLIENT] ===== Complete Model parameter setting =====")
         self.model.fit(self.datasets[client_idx]['x'], self.datasets[client_idx]['y'],
                        epochs=local_epochs, batch_size=self.batch_size, verbose=1)
         return
 
     def set_lr(self, lr):
-        self.model.compile(
+        '''self.model.compile(
             loss=keras.losses.CategoricalCrossentropy(),
             optimizer=keras.optimizers.SGD(learning_rate=lr, clipvalue=1.0))
-
-        #self.model.compile(
-        #    loss=CategoricalCrossentropy(),
-        #    optimizer=gradient_descent_v2.SGD(learning_rate=lr, clipvalue=1.0)
-        #)
+        '''
+        if self.opt == 'sgd':
+            self.model.compile(
+                loss=keras.losses.CategoricalCrossentropy(),
+                optimizer=keras.optimizers.SGD(learning_rate=lr, clipvalue=1.0)
+            )
+        elif self.opt == 'adam':
+            self.model.compile(
+                loss=keras.losses.CategoricalCrossentropy(),
+                optimizer=keras.optimizers.Adam(learning_rate=lr, clipvalue=1.0)
+            )

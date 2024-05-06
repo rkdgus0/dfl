@@ -8,7 +8,7 @@ _wandb:
     framework: keras
     is_jupyter_run: false
     is_kaggle_kernel: false
-    start_time: 1714383612.920218
+    start_time: 1714979338.077437
     t:
       1:
       - 2
@@ -25,7 +25,6 @@ _wandb:
       - 53
       - 55
       3:
-      - 13
       - 23
       4: 3.10.6
       5: 0.16.0
@@ -34,19 +33,19 @@ _wandb:
       13: linux-x86_64
 n_rounds:
   desc: null
-  value: 5
+  value: 100
 n_users:
   desc: null
   value: 10
 n_epochs:
   desc: null
-  value: 3
+  value: 2
 avg_method:
   desc: null
   value: Equal
 model:
   desc: null
-  value: mcmahan2NN
+  value: resnet50
 opt:
   desc: null
   value: sgd
@@ -67,7 +66,7 @@ lr_decay_round:
   value: 5
 dataset:
   desc: null
-  value: mnist
+  value: cifar10
 split:
   desc: null
   value: iid
@@ -80,6 +79,9 @@ eval_round:
 debug:
   desc: null
   value: false
+wandb:
+  desc: null
+  value: true
 wandb_id:
   desc: null
   value: create0327
@@ -88,7 +90,7 @@ wandb_api:
   value: b2f21ce10a4365a21cfce06ad41f9a7f23d34639
 exp_name:
   desc: null
-  value: mcmahan test
+  value: null
 group_name:
   desc: null
-  value: Gang_Test
+  value: null

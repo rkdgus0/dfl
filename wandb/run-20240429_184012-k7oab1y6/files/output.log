@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/home/gang/dfl/main.py", line 55, in <module>
-    model = define_model(args)
-TypeError: define_model() missing 1 required positional argument: 'pre_trained'
-Init Model & Dataset

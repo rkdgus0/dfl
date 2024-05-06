@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=0 python main.py -wandb -group_name Gang_Test -exp_name Test -n_round 10 -n_users 10 -n_epoch 1 -eval_round 1 -model mcmahan2NN -opt sgd -lr 0.002 -lr_decay 0.99 -lr_decay_round 5 -dataset mnist -batch_size 32 -split iid

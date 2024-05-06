@@ -49,7 +49,7 @@ class SCHEDULER(BASE):
                 # client(client_idx)와 연결된 client(connected_idx)는 local update(model.fit).
                 # client(client_idx)는 model_weight에 connected client weight을 aggregate & average.
                 if connect_mapping[client_idx][connect_idx] == 1:
-                    print(f"[SCHEDULER] {client_idx}-device connect with {connect_idx}-device")
+                    #print(f"[SCHEDULER] {client_idx}-device connect with {connect_idx}-device")
                     model_parameters = self.CLIENT_models[connect_idx]
                     self.clients.train(connect_idx, model_parameters, self.n_epochs)
                     model_weights.append(copy.deepcopy(self.clients.model.get_weights()))
@@ -59,9 +59,10 @@ class SCHEDULER(BASE):
                     pass
             avg_ratio = self.calc_avg_ratio(model_weights, connected_client)
             self.CLIENT_models[client_idx] = copy.deepcopy(self.average_model(model_weights, avg_ratio))
-            model_weights.clear()
-
             print(f'Connected Clients with {client_idx}-Client: {connected_client} Clients')
+            
+            model_weights.clear()
+            connected_client.clear()
         return
 
     def clients_test(self):
@@ -112,4 +113,4 @@ class SCHEDULER(BASE):
         return ratio
         
     def set_lr(self, lr):
-        self.clients.clients.set.lr(lr)
+        self.clients.set_lr(lr)

@@ -68,4 +68,4 @@ def compose_client(args, model, datasets):
     lr = args.lr
     opt = args.opt
 
-    return CLIENT(lr, model, datasets, n_epochs, batch_size)
+    return CLIENT(opt, lr, model, datasets, n_epochs, batch_size, 'CUDA:0')
