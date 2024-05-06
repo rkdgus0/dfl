@@ -108,7 +108,7 @@ for n_round in range(1, ROUND+1):
             test_df[f"{client_idx}Client_acc"]=round(test_result[client_idx]['acc']*100, 2)
             test_df[f"{client_idx}Client_loss"]=round(test_result[client_idx]['loss'], 2)
             print(f"[{client_idx} Client] Round: {n_round}, Loss: {test_result[client_idx]['loss']}, Acc: {test_result[client_idx]['acc']:.2%}")
-            print(f"Test_df : {test_df}")
+            #print(f"Test_df : {test_df}")
         if WANDB:
             wandb.log(test_df, step=n_round)
     
@@ -126,4 +126,4 @@ f_name = f'{time()}_Mo{args.model}_Data{args.dataset}_Pre{args.pre_trained}_R{ar
 df.to_csv(f'./csv_results/{f_name}')
 if WANDB:
     wandb.save(f'./csv_results/{f_name}')
-    #wandb.finish()
+    wandb.finish()
