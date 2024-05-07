@@ -52,21 +52,21 @@ if WANDB:
     wandb.config.update(args)
 
 # ----- Model/Dataset Setting ----- #
-print(f"[MAIN] ===== Init Model(Opt: {args.opt}) & Dataset =====")
+print(f"===== Init Model(Opt: {args.opt}) & Dataset =====")
 t1 = time()
 model = define_model(args)
 train_data, test_data = load_dataset(args.dataset)
 split_data = split_data(args.split, train_data, args.n_users, args.alpha)
 t2 = time()
-print(f'[MAIN] ===== Time(sec): {round(t2-t1,2)}\n')
+print(f'===== Time(sec): {round(t2-t1,2)}\n')
 
 # ----- Client Setting ----- #
-print("[MAIN] ===== Init Models =====")
+print("===== Init Models =====")
 t1 = time()
 CLIENTS = compose_client(args, model, split_data)
 SCHEDULER = compose_scheduler(args, model, CLIENTS, test_data)
 t2 = time()
-print(f'[MAIN] ===== Time(sec): {round(t2-t1,2)}\n')
+print(f'===== Time(sec): {round(t2-t1,2)}\n')
 
 # ----- Parameter Setting ----- #
 USE_LR_DECAY = False
@@ -80,13 +80,13 @@ if args.lr_decay:
     USE_LR_DECAY=True
 
 # ----- Global Round ----- #
-print(f"[MAIN] ===== Global Round Start!")
-print(f"[MAIN] ===== Total Round: {ROUND}")
-print(f"[MAIN] ===== Total Client: {NUM_CLIENT}")
-print(f"[MAIN] ===== Model: {args.model}(Pretrained : {args.pre_trained}, Opt: {args.opt})")
-print(f"[MAIN] ===== Learning rate: {args.lr}, learning rate decay: {args.lr_decay}(round: {args.lr_decay_round})")
-print(f"[MAIN] ===== Dataset: {args.dataset}, Data Split: {args.split}")
-print(f"[MAIN] ===== Aggregation Method: {args.avg_method}")
+print(f"===== Global Round Start! =====")
+print(f"[INIT] ===== Total Round: {ROUND}")
+print(f"[INIT] ===== Total Client: {NUM_CLIENT}")
+print(f"[INIT] ===== Model: {args.model}(Pretrained : {args.pre_trained}, Opt: {args.opt})")
+print(f"[INIT] ===== Learning rate: {args.lr}, learning rate decay: {args.lr_decay}(round: {args.lr_decay_round})")
+print(f"[INIT] ===== Dataset: {args.dataset}, Data Split: {args.split}")
+print(f"[INIT] ===== Aggregation Method: {args.avg_method}\n")
 
 for n_round in range(1, ROUND+1):
     SCHEDULER.train()
@@ -108,7 +108,7 @@ for n_round in range(1, ROUND+1):
             test_df[f"{client_idx}Client_acc"]=round(test_result[client_idx]['acc']*100, 2)
             test_df[f"{client_idx}Client_loss"]=round(test_result[client_idx]['loss'], 2)
             print(f"[{client_idx} Client] Round: {n_round}, Loss: {test_result[client_idx]['loss']}, Acc: {test_result[client_idx]['acc']:.2%}")
-            #print(f"Test_df : {test_df}")
+        print("\n")
         if WANDB:
             wandb.log(test_df, step=n_round)
     

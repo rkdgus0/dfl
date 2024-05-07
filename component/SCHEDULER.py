@@ -37,12 +37,35 @@ class SCHEDULER(BASE):
         uploaded_models = []
         connected_client = []
         connect_mapping = self.set_connect_mapping()
-        print(f"[SCHEDULER] ===== Connecting Map =====")
+        print(f"\n===== Connecting Map =====")
         print(connect_mapping)
         
         # Connected Client train
         # Unconnected Client: Local train
+        # 1. 각자 업데이트 후 연결된 클라이언트에 파라미터 제공
+        model_parameter = [[] for _ in range(self.NUM_CLIENT)]
         for client_idx in range(self.NUM_CLIENT):
+            model_parameters = self.CLIENT_models[client_idx]
+            self.clients.train(client_idx, model_parameters, self.n_epochs)
+            model_parameter[client_idx]=copy.deepcopy(self.clients.model.get_weights())
+
+        for client_idx in range(self.NUM_CLIENT):
+            model_weights = []
+            for connect_idx in range(self.NUM_CLIENT):
+                if connect_mapping[client_idx][connect_idx] == 1:
+                    model_weights.append(model_parameter[connect_idx])
+                    connected_client.append(connect_idx)
+                else:
+                    pass
+            avg_ratio = self.calc_avg_ratio(model_weights, connected_client)
+            self.CLIENT_models[client_idx] = copy.deepcopy(self.average_model(model_weights, avg_ratio))
+            print(f'Connected Clients with {client_idx}-Client: {connected_client} Clients')
+            
+            model_weights.clear()
+            connected_client.clear()
+
+        # 2. 연결 성공시, 각자 업데이트 후 취합 -> 동시성이 없음.
+        '''for client_idx in range(self.NUM_CLIENT):
             model_weights = []
             #if any(self.connect_mapping[client_idx][connect_idx] == 1 for connect_idx in range(self.NUM_CLIENT)):
             for connect_idx in range(self.NUM_CLIENT):
@@ -62,7 +85,7 @@ class SCHEDULER(BASE):
             print(f'Connected Clients with {client_idx}-Client: {connected_client} Clients')
             
             model_weights.clear()
-            connected_client.clear()
+            connected_client.clear()'''
         return
 
     def clients_test(self):
