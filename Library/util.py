@@ -41,6 +41,7 @@ def arg_parsing():
     parser.add_argument("-alpha", type=float, default=0.1)
 
     # ----- Debugging Setting ----- #
+    parser.add_argument("-gpu_id", type=int)
     parser.add_argument("-eval_round", type=int, default=1)
     parser.add_argument("-debug", action='store_true')
 
@@ -68,4 +69,4 @@ def compose_client(args, model, datasets):
     lr = args.lr
     opt = args.opt
 
-    return CLIENT(opt, lr, model, datasets, n_epochs, batch_size, 'CUDA:0')
+    return CLIENT(opt, lr, model, datasets, n_epochs, batch_size)

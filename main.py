@@ -28,6 +28,10 @@ keras.src.utils.set_random_seed(seed_num)
 
 args = arg_parsing()
 
+# ----- GPU Setting ----- #
+if args.gpu_id:
+    tf.config.experimental.set_visible_devices(tf.config.list_physical_devices('GPU')[args.gpu_id], 'GPU')
+
 # ----- Wandb Setting ----- #
 # Wandb Debug Setting
 WANDB = args.wandb

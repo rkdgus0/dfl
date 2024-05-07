@@ -8,15 +8,15 @@ import numpy as np
 
 #TODO: 오류 잡으면서 해보기. weight 제대로 들어가는지 확인
 class CLIENT(BASE):
-    def __init__(self, opt, lr, model, datasets, epochs, batch_size, device):
+    def __init__(self, opt, lr, model, datasets, epochs, batch_size):
         self.datasets = datasets
         self.epochs = epochs
         self.batch_size = batch_size
-        self.device = device
         self.model = deepcopy(model)
         self.origin_lr = lr
         self.opt = opt.lower()
-        if self.opt == 'sgd':
+        self.set_lr(self.origin_lr)
+        '''if self.opt == 'sgd':
             self.model.compile(
                 loss=keras.losses.CategoricalCrossentropy(),
                 optimizer=keras.optimizers.SGD(learning_rate=self.origin_lr, clipvalue=1.0)
@@ -25,7 +25,7 @@ class CLIENT(BASE):
             self.model.compile(
                 loss=keras.losses.CategoricalCrossentropy(),
                 optimizer=keras.optimizers.Adam(learning_rate=self.origin_lr, clipvalue=1.0)
-            )
+            )'''
         #self.model.compile(
         #    loss=CategoricalCrossentropy(),
         #    optimizer=gradient_descent_v2.SGD(learning_rate=self.origin_lr, clipvalue=1.0)
