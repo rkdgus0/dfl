@@ -1,1 +1,0 @@
-{"0Client_acc": 76.84, "0Client_loss": 1.53, "1Client_acc": 76.84, "1Client_loss": 1.53, "2Client_acc": 76.91, "2Client_loss": 1.54, "3Client_acc": 76.84, "3Client_loss": 1.53, "4Client_acc": 76.84, "4Client_loss": 1.53, "_timestamp": 1715075030.9315267, "_runtime": 12421.717867612839, "_step": 50, "_wandb": {"runtime": 12420}}
