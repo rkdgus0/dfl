@@ -37,8 +37,8 @@ class SCHEDULER(BASE):
         uploaded_models = []
         connected_client = []
         connect_mapping = self.set_connect_mapping()
-        print(f"\n===== Connecting Map =====")
-        print(connect_mapping)
+        #print(f"===== Connecting Map =====")
+        #print(connect_mapping)
         
         # Connected Client train
         # Unconnected Client: Local train
@@ -49,6 +49,7 @@ class SCHEDULER(BASE):
             self.clients.train(client_idx, model_parameters, self.n_epochs)
             model_parameter[client_idx]=copy.deepcopy(self.clients.model.get_weights())
 
+        print("===== Connected Clients =====")
         for client_idx in range(self.NUM_CLIENT):
             model_weights = []
             for connect_idx in range(self.NUM_CLIENT):
@@ -59,7 +60,7 @@ class SCHEDULER(BASE):
                     pass
             avg_ratio = self.calc_avg_ratio(model_weights, connected_client)
             self.CLIENT_models[client_idx] = copy.deepcopy(self.average_model(model_weights, avg_ratio))
-            print(f'Connected Clients with {client_idx}-Client: {connected_client} Clients')
+            print(f'{client_idx}-Client: {connected_client}')
             
             model_weights.clear()
             connected_client.clear()
@@ -95,7 +96,7 @@ class SCHEDULER(BASE):
             model_parameters = self.CLIENT_models[client_idx]
             model = copy.deepcopy(self.model)
             model.set_weights(model_parameters)
-            loss, acc = model.evaluate(test_x, test_y)
+            loss, acc = model.evaluate(test_x, test_y, verbose=2)
             test_result[client_idx]['loss'] = loss
             test_result[client_idx]['acc'] = acc
         return test_result
