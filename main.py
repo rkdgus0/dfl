@@ -111,7 +111,7 @@ for n_round in range(1, ROUND+1):
             dict_df['TestAcc'].append(round(test_result[client_idx]['acc']*100, 2))
             test_df[f"{client_idx}Client_acc"]=round(test_result[client_idx]['acc']*100, 2)
             test_df[f"{client_idx}Client_loss"]=round(test_result[client_idx]['loss'], 2)
-            print(f"[{client_idx} Client] Round: {n_round}, Loss: {test_result[client_idx]['loss']}, Acc: {test_result[client_idx]['acc']:.2%}")
+            print(f"[{client_idx} Client] Round: {n_round}, Loss: {round(np.mean(test_result['loss']), 2)}, Acc: {round(np.mean(test_result['acc'])*100, 2)}%")
         print("\n")
         if WANDB:
             wandb.log({
