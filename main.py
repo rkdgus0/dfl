@@ -116,7 +116,7 @@ for n_round in range(1, ROUND+1):
         if WANDB:
             wandb.log({
                 "Test Acc": round(np.mean(test_result['acc'])*100, 2),
-                "Test Loss": round(np.mean(test_result['loss']), 2)}
+                "Test Loss": round(np.mean(test_result['loss']), 2)},
                 step=n_round)
             # All Clients data update
             #wandb.log(test_df, step=n_round)
