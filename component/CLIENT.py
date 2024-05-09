@@ -38,7 +38,7 @@ class CLIENT(BASE):
     def train(self, client_idx, model_parameters, local_epochs=1):
         self.model.set_weights(model_parameters)
         self.model.fit(self.datasets[client_idx]['x'], self.datasets[client_idx]['y'],
-                       epochs=local_epochs, batch_size=self.batch_size, verbose=0)
+                       epochs=local_epochs, batch_size=self.batch_size, verbose=2)
         return
 
     def set_lr(self, lr):

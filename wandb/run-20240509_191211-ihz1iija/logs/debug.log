@@ -27,3 +27,10 @@ config: {}
 2024-05-09 19:12:16,183 INFO    MainThread:509558 [wandb_run.py:_redirect():2178] Redirects installed.
 2024-05-09 19:12:16,184 INFO    MainThread:509558 [wandb_init.py:init():841] run started, returning control to user process
 2024-05-09 19:12:16,185 INFO    MainThread:509558 [wandb_run.py:_config_callback():1342] config_cb None None {'n_rounds': 50, 'n_users': 10, 'n_epochs': 2, 'avg_method': 'Equal', 'model': 'mcmahan2NN', 'opt': 'sgd', 'pre_trained': False, 'lr': 0.075, 'batch_size': 32, 'lr_decay': 0.99, 'lr_decay_round': 5, 'dataset': 'mnist', 'split': 'iid', 'alpha': 0.1, 'gpu_id': None, 'eval_round': 1, 'debug': False, 'wandb': True, 'wandb_id': 'create0327', 'wandb_api': 'b2f21ce10a4365a21cfce06ad41f9a7f23d34639', 'exp_name': 'mcmahan2NN_lr0.075_iid_u10_epoch2', 'group_name': 'Gang_Test'}
+2024-05-09 19:41:11,384 INFO    MainThread:509558 [wandb_run.py:_finish():1962] finishing run create0327/Gang_Test/ihz1iija
+2024-05-09 19:41:11,384 INFO    MainThread:509558 [wandb_run.py:_atexit_cleanup():2202] got exitcode: 0
+2024-05-09 19:41:11,384 INFO    MainThread:509558 [wandb_run.py:_restore():2185] restore
+2024-05-09 19:41:11,384 INFO    MainThread:509558 [wandb_run.py:_restore():2191] restore done
+2024-05-09 19:41:21,258 INFO    MainThread:509558 [wandb_run.py:_footer_history_summary_info():3760] rendering history
+2024-05-09 19:41:21,259 INFO    MainThread:509558 [wandb_run.py:_footer_history_summary_info():3792] rendering summary
+2024-05-09 19:41:21,270 INFO    MainThread:509558 [wandb_run.py:_footer_sync_info():3719] logging synced files

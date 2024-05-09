@@ -27,3 +27,4 @@ config: {}
 2024-05-09 19:12:16,505 INFO    MainThread:509559 [wandb_run.py:_redirect():2178] Redirects installed.
 2024-05-09 19:12:16,507 INFO    MainThread:509559 [wandb_init.py:init():841] run started, returning control to user process
 2024-05-09 19:12:16,508 INFO    MainThread:509559 [wandb_run.py:_config_callback():1342] config_cb None None {'n_rounds': 50, 'n_users': 50, 'n_epochs': 2, 'avg_method': 'Equal', 'model': 'mcmahan2NN', 'opt': 'sgd', 'pre_trained': False, 'lr': 0.075, 'batch_size': 32, 'lr_decay': 0.99, 'lr_decay_round': 5, 'dataset': 'mnist', 'split': 'iid', 'alpha': 0.1, 'gpu_id': None, 'eval_round': 1, 'debug': False, 'wandb': True, 'wandb_id': 'create0327', 'wandb_api': 'b2f21ce10a4365a21cfce06ad41f9a7f23d34639', 'exp_name': 'mcmahan2NN_lr0.075_iid_u50_epoch2', 'group_name': 'Gang_Test'}
+2024-05-09 19:12:38,163 WARNING MsgRouterThr:509559 [router.py:message_loop():77] message_loop has been closed
