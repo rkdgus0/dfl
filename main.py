@@ -114,7 +114,14 @@ for n_round in range(1, ROUND+1):
             print(f"[{client_idx} Client] Round: {n_round}, Loss: {test_result[client_idx]['loss']}, Acc: {test_result[client_idx]['acc']:.2%}")
         print("\n")
         if WANDB:
-            wandb.log(test_df, step=n_round)
+            wandb.log({
+                "Test Acc": round(np.mean(test_result['acc'])*100, 2),
+                "Test Loss": round(np.mean(test_result['loss']), 2)}
+                step=n_round)
+            # All Clients data update
+            #wandb.log(test_df, step=n_round)
+            # Client's Mean data update
+
     
     '''
     if (n_round - 1) % 100 == 0:
@@ -126,8 +133,8 @@ for n_round in range(1, ROUND+1):
 df = pd.DataFrame(dict_df)
 os.makedirs('./csv_results', exist_ok=True)
 f_name = f'{time()}_Mo{args.model}_Data{args.dataset}_Pre{args.pre_trained}_R{args.n_rounds}_N{args.n_users}_E{args.n_epochs}_Split{args.split}_Alp{args.alpha}_Delay_{args.delay_method}.csv'
-
 df.to_csv(f'./csv_results/{f_name}')
+
 if WANDB:
     wandb.save(f'./csv_results/{f_name}')
     wandb.finish()
