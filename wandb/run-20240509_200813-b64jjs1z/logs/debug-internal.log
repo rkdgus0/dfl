@@ -1,0 +1,175 @@
+2024-05-09 20:08:13,057 INFO    StreamThr :535255 [internal.py:wandb_internal():86] W&B internal server running at pid: 535255, started at: 2024-05-09 20:08:13.056119
+2024-05-09 20:08:13,058 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status
+2024-05-09 20:08:13,068 INFO    WriterThread:535255 [datastore.py:open_for_write():85] open: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/run-b64jjs1z.wandb
+2024-05-09 20:08:13,068 DEBUG   SenderThread:535255 [sender.py:send():380] send: header
+2024-05-09 20:08:13,092 DEBUG   SenderThread:535255 [sender.py:send():380] send: run
+2024-05-09 20:08:13,792 INFO    SenderThread:535255 [dir_watcher.py:__init__():211] watching files in: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files
+2024-05-09 20:08:13,792 INFO    SenderThread:535255 [sender.py:_start_run_threads():1124] run started: b64jjs1z with start time 1715252893.056355
+2024-05-09 20:08:13,805 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: check_version
+2024-05-09 20:08:13,805 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: check_version
+2024-05-09 20:08:14,577 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: run_start
+2024-05-09 20:08:14,623 DEBUG   HandlerThread:535255 [system_info.py:__init__():32] System info init
+2024-05-09 20:08:14,623 DEBUG   HandlerThread:535255 [system_info.py:__init__():47] System info init done
+2024-05-09 20:08:14,623 INFO    HandlerThread:535255 [system_monitor.py:start():194] Starting system monitor
+2024-05-09 20:08:14,624 INFO    SystemMonitor:535255 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-05-09 20:08:14,624 INFO    HandlerThread:535255 [system_monitor.py:probe():214] Collecting system info
+2024-05-09 20:08:14,624 INFO    SystemMonitor:535255 [interfaces.py:start():190] Started cpu monitoring
+2024-05-09 20:08:14,625 INFO    SystemMonitor:535255 [interfaces.py:start():190] Started disk monitoring
+2024-05-09 20:08:14,628 INFO    SystemMonitor:535255 [interfaces.py:start():190] Started gpu monitoring
+2024-05-09 20:08:14,629 INFO    SystemMonitor:535255 [interfaces.py:start():190] Started memory monitoring
+2024-05-09 20:08:14,629 INFO    SystemMonitor:535255 [interfaces.py:start():190] Started network monitoring
+2024-05-09 20:08:14,675 DEBUG   HandlerThread:535255 [system_info.py:probe():196] Probing system
+2024-05-09 20:08:14,682 DEBUG   HandlerThread:535255 [system_info.py:_probe_git():181] Probing git
+2024-05-09 20:08:14,696 DEBUG   HandlerThread:535255 [system_info.py:_probe_git():189] Probing git done
+2024-05-09 20:08:14,696 DEBUG   HandlerThread:535255 [system_info.py:probe():244] Probing system done
+2024-05-09 20:08:14,697 DEBUG   HandlerThread:535255 [system_monitor.py:probe():223] {'os': 'Linux-5.15.0-100-generic-x86_64-with-glibc2.35', 'python': '3.9.19', 'heartbeatAt': '2024-05-09T11:08:14.676085', 'startedAt': '2024-05-09T11:08:13.044916', 'docker': None, 'cuda': None, 'args': ('-n_rounds', '100', '-n_users', '100', '-n_epochs', '2', '-eval_round', '1', '-model', 'resnet50', '-opt', 'sgd', '-lr', '0.003', '-lr_decay', '0.99', '-lr_decay_round', '5', '-dataset', 'cifar10', '-batch_size', '32', '-split', 'non_iid', '-wandb', '-group_name', 'Gang_Test', '-exp_name', 'resnet50_lr0.075_niid_u100_epoch2', '-gpu_id', '1'), 'state': 'running', 'program': '/home/gang/dfl/main.py', 'codePathLocal': 'main.py', 'codePath': 'main.py', 'git': {'remote': 'git@github.com:rkdgus0/dfl.git', 'commit': '17737b2cc13e58b3cf9dde91d2f1974f6b0e1d0b'}, 'email': 'create0327@naver.com', 'root': '/home/gang/dfl', 'host': 'server1', 'username': 'gang', 'executable': '/home/gang/miniconda3/envs/fl/bin/python3', 'cpu_count': 20, 'cpu_count_logical': 40, 'cpu_freq': {'current': 1368.5376250000002, 'min': 1000.0, 'max': 3200.0}, 'cpu_freq_per_core': [{'current': 1209.718, 'min': 1000.0, 'max': 3200.0}, {'current': 1900.0, 'min': 1000.0, 'max': 3200.0}, {'current': 2200.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1100.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1500.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 2200.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 3200.0, 'min': 1000.0, 'max': 3200.0}, {'current': 3200.0, 'min': 1000.0, 'max': 3200.0}, {'current': 3200.0, 'min': 1000.0, 'max': 3200.0}, {'current': 3200.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}, {'current': 1000.0, 'min': 1000.0, 'max': 3200.0}], 'disk': {'/': {'total': 245.01800918579102, 'used': 7.249919891357422}}, 'gpu': 'NVIDIA GeForce RTX 3090', 'gpu_count': 3, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 3090', 'memory_total': 25769803776}, {'name': 'NVIDIA GeForce RTX 3090', 'memory_total': 25769803776}, {'name': 'NVIDIA GeForce RTX 3090', 'memory_total': 25769803776}], 'memory': {'total': 251.5350456237793}}
+2024-05-09 20:08:14,697 INFO    HandlerThread:535255 [system_monitor.py:probe():224] Finished collecting system info
+2024-05-09 20:08:14,697 INFO    HandlerThread:535255 [system_monitor.py:probe():227] Publishing system info
+2024-05-09 20:08:14,697 DEBUG   HandlerThread:535255 [system_info.py:_save_pip():52] Saving list of pip packages installed into the current environment
+2024-05-09 20:08:14,697 DEBUG   HandlerThread:535255 [system_info.py:_save_pip():68] Saving pip packages done
+2024-05-09 20:08:14,697 DEBUG   HandlerThread:535255 [system_info.py:_save_conda():75] Saving list of conda packages installed into the current environment
+2024-05-09 20:08:14,796 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_created():271] file/dir created: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/requirements.txt
+2024-05-09 20:08:14,797 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_created():271] file/dir created: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/conda-environment.yaml
+2024-05-09 20:08:18,153 DEBUG   HandlerThread:535255 [system_info.py:_save_conda():87] Saving conda packages done
+2024-05-09 20:08:18,154 INFO    HandlerThread:535255 [system_monitor.py:probe():229] Finished publishing system info
+2024-05-09 20:08:18,159 DEBUG   SenderThread:535255 [sender.py:send():380] send: files
+2024-05-09 20:08:18,160 INFO    SenderThread:535255 [sender.py:_save_file():1380] saving file wandb-metadata.json with policy now
+2024-05-09 20:08:18,160 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:08:18,165 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:08:18,166 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:08:18,168 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:08:18,658 DEBUG   SenderThread:535255 [sender.py:send():380] send: telemetry
+2024-05-09 20:08:18,658 DEBUG   SenderThread:535255 [sender.py:send():380] send: config
+2024-05-09 20:08:18,795 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/conda-environment.yaml
+2024-05-09 20:08:18,795 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_created():271] file/dir created: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/wandb-metadata.json
+2024-05-09 20:08:18,796 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_created():271] file/dir created: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:08:19,342 INFO    wandb-upload_0:535255 [upload_job.py:push():131] Uploaded file /tmp/tmpnmmkkqupwandb/kc1qpow8-wandb-metadata.json
+2024-05-09 20:08:20,796 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:08:23,660 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:08:28,661 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:08:33,166 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:08:33,167 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:08:33,167 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:08:34,439 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:08:39,440 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:08:44,446 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:08:44,808 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/config.yaml
+2024-05-09 20:08:48,166 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:08:48,167 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:08:48,168 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:08:50,418 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:08:55,419 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:00,419 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:03,167 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:09:03,168 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:09:03,169 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:09:05,423 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:10,822 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:09:10,827 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:14,630 DEBUG   SystemMonitor:535255 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-05-09 20:09:14,633 DEBUG   SenderThread:535255 [sender.py:send():380] send: stats
+2024-05-09 20:09:16,635 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:18,168 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:09:18,168 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:09:18,169 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:09:22,456 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:27,457 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:32,832 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:09:33,000 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:33,174 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:09:33,176 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:09:33,176 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:09:38,477 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:43,478 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:44,634 DEBUG   SenderThread:535255 [sender.py:send():380] send: stats
+2024-05-09 20:09:48,168 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:09:48,169 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:09:48,169 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:09:49,442 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:52,840 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:09:54,672 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:09:54,841 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:09:56,843 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:09:58,844 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:09:59,993 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:00,845 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:02,846 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:03,171 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:10:03,172 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:10:03,172 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:10:04,847 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:05,414 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:06,848 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:08,849 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:10,771 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:10,850 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:12,851 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:14,636 DEBUG   SenderThread:535255 [sender.py:send():380] send: stats
+2024-05-09 20:10:14,852 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:16,027 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:16,853 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:18,169 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:10:18,170 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:10:18,171 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:10:18,854 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:20,855 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:21,437 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:22,856 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:24,857 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:26,858 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:26,959 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:28,859 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:30,860 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:32,512 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:32,861 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:33,169 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:10:33,170 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:10:33,171 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:10:34,862 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:36,863 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:37,901 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:38,864 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:40,865 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:42,866 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:43,216 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:44,639 DEBUG   SenderThread:535255 [sender.py:send():380] send: stats
+2024-05-09 20:10:44,867 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:46,868 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:48,170 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:10:48,170 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:10:48,171 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:10:48,462 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:48,869 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:50,870 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:53,734 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:53,872 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:55,873 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:57,874 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:10:59,233 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:10:59,875 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:01,876 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:03,171 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:11:03,172 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:11:03,173 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:11:03,878 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:04,615 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:11:05,879 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:07,880 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:09,616 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:11:09,881 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:11,881 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:13,882 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:14,640 DEBUG   SenderThread:535255 [sender.py:send():380] send: stats
+2024-05-09 20:11:14,642 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:11:15,883 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:17,884 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:18,171 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: stop_status
+2024-05-09 20:11:18,171 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: internal_messages
+2024-05-09 20:11:18,172 DEBUG   SenderThread:535255 [sender.py:send_request():407] send_request: stop_status
+2024-05-09 20:11:19,683 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:11:19,885 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:21,886 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:23,887 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:24,974 DEBUG   HandlerThread:535255 [handler.py:handle_request():146] handle_request: status_report
+2024-05-09 20:11:25,888 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
+2024-05-09 20:11:27,889 INFO    Thread-12 :535255 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/gang/dfl/wandb/run-20240509_200813-b64jjs1z/files/output.log
