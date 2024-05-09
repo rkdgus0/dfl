@@ -1,0 +1,12 @@
+
+===== Init Model(Opt: sgd) & Dataset =====
+===== Time(sec): 2.75
+===== Init Models =====
+===== Time(sec): 0.1
+===== Init Parameters =====
+[INIT] ===== Total Round: 50
+[INIT] ===== Total Client: 10
+[INIT] ===== Model: mcmahan2NN(Pretrained : False, Opt: sgd)
+[INIT] ===== Learning rate: 0.075, learning rate decay: 0.99(round: 5)
+[INIT] ===== Dataset: mnist, Data Split: iid
+[INIT] ===== Aggregation Method: Equal
