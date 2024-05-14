@@ -110,24 +110,21 @@ for n_round in range(1, ROUND+1):
             dict_df['Round'].append(n_round)
             dict_df['Client'].append(client_idx)
             dict_df['TestAcc'].append(round(test_result[client_idx]['acc']*100, 2))
+
+            # ===== All Client data update =====
             #test_df[f"{client_idx}Client_acc"]=round(test_result[client_idx]['acc']*100, 2)
             #test_df[f"{client_idx}Client_loss"]=round(test_result[client_idx]['loss'], 2)
             #print(f"[{client_idx} Client] Round: {n_round}, Loss: {round(test_result[client_idx]['loss'], 2)}, Acc: {round(test_result[client_idx]['acc']*100, 2)}%")
+        
         mean_acc = round(np.mean([client['acc'] for client in test_result])*100, 2)
         mean_loss = round(np.mean([client['loss'] for client in test_result]), 2)
         print(f"\n[Client Mean] Round: {n_round}, Loss: {mean_loss}, Acc: {mean_acc}%\n")
         if WANDB:
             wandb.log({"Test Acc": mean_acc, "Test Loss": mean_loss}, step=n_round)
-            # All Clients data update
+            
+            # ===== All Clients data update =====
             #wandb.log(test_df, step=n_round)
             # Client's Mean data update
-
-    
-    '''
-    if (n_round - 1) % 100 == 0:
-        os.makedirs('./checkpoints', exist_ok=True)
-        SCHEDULER.model.save(f'checkpoints/R:{n_round}_{args.exp_name}')
-    '''
 
 # ----- Result CSV load, wandb log-out ----- #
 df = pd.DataFrame(dict_df)

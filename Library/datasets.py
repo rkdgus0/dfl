@@ -1,7 +1,7 @@
 import sys
 from collections import defaultdict
 
-sys.path.append("../")  # To use fedlab library
+sys.path.append("../")
 
 import numpy as np
 from keras.layers import *
@@ -64,15 +64,6 @@ def load_dataset(data):
         num_classes = 10
         (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
-        # Example usage:
-        # Assuming you have a TensorFlow dataset 'train_dataset' containing images
-        # Apply the transformation to each image in the dataset
-        # train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
-        # test_dataset = tf.data.Dataset.from_tensor_slices((x_test, y_test))
-
-        # x_train = train_dataset.batch(1).map(lambda x, y: data_augmentation(x))
-        # x_train, y_train = train_dataset.map(lambda x, y: (data_augmentation(x), y))
-        # x_test, y_test = test_dataset.map(transform_test)
         x_train = x_train.astype("float32")
         x_test = x_test.astype("float32")
 
@@ -112,11 +103,8 @@ def random_split_data(origin_data, n_user):
 
 def iid_split_data(origin_data, n_user):
     x, y = origin_data
-
     client_datasets = [{'x': [], 'y': []} for _ in range(n_user)]
-
     tmp_y = np.argmax(y, axis=1)
-
     unique_labels = np.unique(tmp_y, return_counts=False)
     user_idx_list = [[] for _ in range(n_user)]
 
@@ -165,24 +153,19 @@ def non_iid_split_data(dataset, num_clients):
         client_datasets[i]['y'] = np.take(labels, dict_users[i], axis=0)
     return client_datasets
 
+
 def diri_split_data(origin_data, n_user, alpha):
 
     x, labels = origin_data
-
     client_datasets = [{'x': [], 'y': []} for _ in range(n_user)]
-
     t_classes = len(np.unique(labels))
-
     t_idx_slice = [[] for _ in range(n_user)]
 
     for k in range(t_classes):
         t_idx_k = np.where(labels == k)[0]
         np.random.shuffle(t_idx_k)
-
         prop = np.random.dirichlet(np.repeat(alpha, n_user))
-
         t_prop = (np.cumsum(prop) * len(t_idx_k)).astype(int)[:-1]
-
         t_idx_slice = idx_slicer(t_idx_slice, t_idx_k, t_prop)
 
     for i in range(n_user):

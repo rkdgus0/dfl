@@ -37,11 +37,8 @@ class SCHEDULER(BASE):
         uploaded_models = []
         connected_client = []
         connect_mapping = self.set_connect_mapping()
-        #print(f"===== Connecting Map =====")
-        #print(connect_mapping)
         
         # Connected Client train
-        # Unconnected Client: Local train
         # 1. 각자 업데이트 후 연결된 클라이언트에 파라미터 제공
         model_parameter = [[] for _ in range(self.NUM_CLIENT)]
         for client_idx in range(self.NUM_CLIENT):
@@ -65,7 +62,7 @@ class SCHEDULER(BASE):
             model_weights.clear()
             connected_client.clear()
 
-        # 2. 연결 성공시, 각자 업데이트 후 취합 -> 동시성이 없음.
+        # 2. 연결 성공시, 각자 업데이트 후 취합 -> 동시성이 없음. 폐기
         '''for client_idx in range(self.NUM_CLIENT):
             model_weights = []
             #if any(self.connect_mapping[client_idx][connect_idx] == 1 for connect_idx in range(self.NUM_CLIENT)):
