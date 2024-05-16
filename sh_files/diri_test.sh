@@ -1,7 +1,4 @@
 #!/bin/bash
-
-source activate fl
-
 cd ../
 
 gpu_id=0
