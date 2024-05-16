@@ -173,7 +173,7 @@ def diri_split_data(origin_data, n_user, alpha):
 
     for i in range(n_user):
         client_datasets[i]['x'] = np.take(x, t_idx_slice[i], axis=0)
-        client_datasets[i]['y'] = np.take(y, t_idx_slice[i], axis=0)
+        client_datasets[i]['y'] = np.take(labels, t_idx_slice[i], axis=0)
 
     return client_datasets
 

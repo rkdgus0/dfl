@@ -3,7 +3,6 @@ import keras
 from keras import layers
 from tensorflow.keras.applications.densenet import DenseNet121
 from tensorflow.keras.applications.resnet50 import ResNet50
-from tensorflow.keras.applications.resnet50 import ResNet18
 from tensorflow.keras.applications import ResNet101
 from tensorflow.keras import Model
 
@@ -75,13 +74,11 @@ def define_model(args):
     elif model_name =="mcmahancnn":
         Model = McMahanCNN(input_shape=input_shape)
 
-    elif model_name in ['resnet18', 'resnet50', 'resnet101', 'densenet121']:
+    elif model_name in ['resnet50', 'resnet101', 'densenet121']:
         Model = Sequential()
         Model.add(InputLayer(input_shape=(32,32,3)))
         Model.add(Normalization(mean=[0.4914, 0.4822, 0.4465], variance=[0.2023, 0.1994, 0.2010]))
         if model_name == 'resnet50':
-            model = ResNet18(weights=weight, include_top=False, input_shape=input_shape)
-        elif model_name == 'resnet50':
             model = ResNet50(weights=weight, include_top=False, input_shape=input_shape)
         elif model_name == 'resnet101':
             model = ResNet101(weights=weight, include_top=False, input_shape=input_shape)
