@@ -8,7 +8,7 @@ from sklearn.utils import shuffle
 import numpy as np
 
 DATA_LIST = ['mnist', 'cifar10']
-MODEL_CHOICES = ['mcmahan2NN', 'mcmahanCNN', 'resnet50', 'resnet101', 'densenet121', 'VGG16']
+MODEL_CHOICES = ['mcmahan2NN', 'mcmahanCNN', 'resnet18', 'resnet50', 'resnet101', 'densenet121', 'VGG16']
 OPTIMIZER_CHOICES = ['sgd','adam']
 DATA_SPLIT_METHODS = ['random', 'iid', 'non_iid', 'diri']
 CLIENT_MAPPING_METHODS = ['equal', 'diff']

@@ -34,7 +34,6 @@ class SCHEDULER(BASE):
         return matrix
 
     def train(self):
-        uploaded_models = []
         connected_client = []
         connect_mapping = self.set_connect_mapping()
         
@@ -118,7 +117,7 @@ class SCHEDULER(BASE):
         if self.avg_method.lower() == 'Acc':
             for model in models:
                 self.model.set_weights(model)
-                loss, acc = self.test()
+                _, acc = self.test()
                 ratio.append(acc)
         elif 'f1' in self.avg_method.lower():
             for model in models:
@@ -130,7 +129,6 @@ class SCHEDULER(BASE):
                 ratio.append(len(self.clients.datasets[connect_idx]['x']))
         elif self.avg_method.lower() == 'equal':
             ratio = [1]*len(models)
-
         return ratio
         
     def set_lr(self, lr):
