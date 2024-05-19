@@ -154,7 +154,7 @@ def non_iid_split_data(dataset, num_clients):
     return client_datasets
 
 
-def diri_split_data(origin_data, n_user, alpha):
+def diri_split_data1(origin_data, n_user, alpha):
 
     x, labels = origin_data
     client_datasets = [{'x': [], 'y': []} for _ in range(n_user)]
@@ -177,6 +177,29 @@ def diri_split_data(origin_data, n_user, alpha):
 
     return client_datasets
 
+def diri_split_data(origin_data, n_user, alpha):
+    x, labels = origin_data
+    client_datasets = [{'x': [], 'y': []} for _ in range(n_user)]
+
+    y_train_index = np.argmax(labels, axis=1)
+    t_classes = len(np.unique(y_train_index))
+    t_idx_slice = [[] for _ in range(n_user)]
+
+    for k in range(t_classes):
+        t_idx_k = np.where(y_train_index == k)[0]
+        np.random.shuffle(t_idx_k)
+        prop = np.random.dirichlet(np.repeat(alpha, n_user))
+        t_prop = (np.cumsum(prop) * len(t_idx_k)).astype(int)[:-1]
+        t_idx_slice = idx_slicer(t_idx_slice, t_idx_k, t_prop)
+
+    for i in range(n_user):
+        np.random.shuffle(t_idx_slice[i])
+
+    for i in range(n_user):
+        client_datasets[i]['x'] = np.take(x, t_idx_slice[i], axis=0)
+        client_datasets[i]['y'] = np.take(labels, t_idx_slice[i], axis=0)
+
+    return client_datasets
 
 def idx_slicer(idx_slice, idx_k, prop):
     return [idx_j + idx.tolist() for idx_j, idx in zip(idx_slice, np.split(idx_k, prop))]

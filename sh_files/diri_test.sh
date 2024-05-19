@@ -11,7 +11,6 @@ exp_name='resnet50_lr0.01_diri_a0.5_u10_b1024'
   -gpu_id $gpu_id &
 
 '''
--wandb
 gpu_id=1
 group_name='Gang_Test'
 exp_name='resnet18_lr0.01_diri_a0.5_u10_b512'

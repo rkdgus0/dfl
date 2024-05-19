@@ -1,8 +1,0 @@
-
-===== Init Model(Opt: sgd) & Dataset =====
-Traceback (most recent call last):
-  File "/home/gang/dfl/main.py", line 61, in <module>
-    model = define_model(args)
-  File "/home/gang/dfl/Library/models.py", line 92, in define_model
-    raise ValueError("check model name")
-ValueError: check model name
