@@ -103,7 +103,7 @@ for n_round in range(1, ROUND+1):
         SCHEDULER.set_lr(lr)
     
     # ----- Test Result upload ----- #
-    if ((n_round-1) % eval_round == 0) or (n_round >= ROUND - 20):
+    if ((n_round-1) % eval_round == 0):
         test_result = SCHEDULER.clients_test()
         
         for client_idx in range(NUM_CLIENT):
