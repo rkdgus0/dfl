@@ -32,6 +32,20 @@ class SCHEDULER(BASE):
 
         matrix = np.maximum(matrix, matrix.T)
         return matrix
+    
+    def FL_train(self):
+        client_set = [idx for idx in range(self.NUM_CLIENT)]
+
+        # 1. 각자 업데이트 후 Scheduler에 파라미터 제공
+        server_parameter = copy.deepcopy(self.model.get_weights())
+        for client_idx in range(self.NUM_CLIENT):
+            model_weights = []
+            self.clients.train(client_idx, server_parameter, self.n_epochs)
+            model_weights.append(copy.deepcopy(self.clients.model.get_weights()))
+        avg_ratio = self.calc_avg_ratio(model_weights, client_set)
+        self.model.set_weights(self.average_model(model_weights, avg_ratio))
+        
+        model_weights.clear()
 
     def train(self):
         connected_client = []
@@ -99,7 +113,7 @@ class SCHEDULER(BASE):
 
     def test(self):
         test_x, test_y = self.test_data
-        return self.model.evaluate(test_x, test_y)
+        return self.model.evaluate(test_x, test_y, verbose=2)
 
     def f1_test(self, avg_method):
         test_x, test_y = self.test_data

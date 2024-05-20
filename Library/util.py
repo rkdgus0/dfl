@@ -41,6 +41,7 @@ def arg_parsing():
     parser.add_argument("-alpha", type=float, default=0.1)
 
     # ----- Debugging Setting ----- #
+    parser.add_argument("-basic_fl", action='store_true')
     parser.add_argument("-gpu_id", type=int)
     parser.add_argument("-eval_round", type=int, default=1)
     parser.add_argument("-debug", action='store_true')

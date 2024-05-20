@@ -5,3 +5,7 @@ python3 main.py -wandb -n_round 100 -n_users 5 -n_epoch 1 -eval_round 1 -model r
 python3 main.py -n_round 100 -n_users 10 -n_epoch 1 -eval_round 1 -model mcmahan2NN -pre_trained -opt sgd -lr 0.002 -lr_decay 0.99 -lr_decay_round 5 -dataset mnist -batch_size 32 -split iid -group_name DFL -exp_name Test#1
 
 python3 main.py -n_rounds 100 -n_users 10 -n_epochs 3 -eval_round 1 -model resnet50 -opt sgd -lr 0.002 -lr_decay 0.99 -lr_decay_round 5 -dataset cifar10 -batch_size 32 -split non_iid -wandb -exp_name resnet50_lr0.002_niid_u10_epoch3 -gpu_id 0 & python3 main.py -n_rounds 100 -n_users 50 -n_epochs 3 -eval_round 1 -model resnet50 -opt sgd -lr 0.002 -lr_decay 0.99 -lr_decay_round 5 -dataset cifar10 -batch_size 32 -split non_iid -wandb -exp_name resnet50_lr0.002_niid_u50_epoch2 -gpu_id 1 &
+
+python3 main.py -n_rounds 1000 -n_users 10 -n_epochs 1 -eval_round 10 -model mcmahanCNN -opt sgd -lr 0.01 -lr_decay 0.99 -lr_decay_round 5 -dataset cifar10 -batch_size 1024 -split diri -alpha 0.5 -group_name 'Gang_Test' -exp_name 'mcmahanCNN_lr0.01_diri_a0.5_u10_b1024' > log_1.txt 2>&1 &
+
+python3 main.py -n_rounds 1000 -n_users 10 -n_epochs 1 -eval_round 10 -model mcmahanCNN -opt sgd -lr 0.05 -dataset cifar10 -batch_size 1024 -split diri -alpha 0.5 -wandb -group_name 'LeNet_Test' -exp_name 'mcmahanCNN_lr0.05_diri_a0.5_u10_b1024_debug' -gpu_id 0

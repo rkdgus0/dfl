@@ -52,7 +52,7 @@ if WANDB:
         wandb.login(key=f"{wandb_api}")
 
     # Wandb init project & parameter
-    wandb.init(project="Gang_Test", mode=mode, group=group_name, entity=f'{wandb_id}', name=run_name)
+    wandb.init(project="Gang_Test", mode=mode, group=f'{group_name}', entity=f'{wandb_id}', name=run_name)
     wandb.config.update(args)
 
 # ----- Model/Dataset Setting ----- #
@@ -74,6 +74,7 @@ print(f'===== Time(sec): {round(t2-t1,2)}\n')
 
 # ----- Parameter Setting ----- #
 USE_LR_DECAY = False
+DFL = not args.basic_fl
 ROUND = args.n_rounds
 NUM_CLIENT = args.n_users
 eval_round = args.eval_round
@@ -85,8 +86,10 @@ if args.lr_decay:
 
 # ----- Global Round ----- #
 print(f"===== Init Parameters =====")
+print(f"[INIT] ===== DFL Setting: {DFL}")
 print(f"[INIT] ===== Total Round: {ROUND}")
 print(f"[INIT] ===== Total Client: {NUM_CLIENT}")
+print(f"[INIT] ===== Local Epoch: {args.n_epochs}, Batch_size: {args.batch_size}(Local update per user: {(50000//NUM_CLIENT)//args.batch_size})")
 print(f"[INIT] ===== Model: {args.model}(Pretrained : {args.pre_trained}, Opt: {args.opt})")
 print(f"[INIT] ===== Learning rate: {args.lr}, learning rate decay: {args.lr_decay}(round: {args.lr_decay_round})")
 print(f"[INIT] ===== Dataset: {args.dataset}, Data Split: {args.split}")
@@ -94,7 +97,10 @@ print(f"[INIT] ===== Aggregation Method: {args.avg_method}\n")
 
 for n_round in range(1, ROUND+1):
     print(f"===== Global Round {n_round} Start! =====")
-    SCHEDULER.train()
+    if DFL:
+        SCHEDULER.train()
+    else:
+        SCHEDULER.FL_train()
     test_df = {}
 
     # ----- Learning rate decay Setting ----- #
@@ -103,35 +109,49 @@ for n_round in range(1, ROUND+1):
         SCHEDULER.set_lr(lr)
     
     # ----- Test Result upload ----- #
-    if ((n_round-1) % eval_round == 0):
-        test_result = SCHEDULER.clients_test()
-        
-        for client_idx in range(NUM_CLIENT):
-            dict_df['Round'].append(n_round)
-            dict_df['Client'].append(client_idx)
-            dict_df['TestAcc'].append(round(test_result[client_idx]['acc']*100, 2))
+    if n_round == 1:
+        if DFL:
+            test_result = SCHEDULER.clients_test()
+        else:
+            loss, acc = SCHEDULER.test()
 
-            # ===== All Client data update =====
-            #test_df[f"{client_idx}Client_acc"]=round(test_result[client_idx]['acc']*100, 2)
-            #test_df[f"{client_idx}Client_loss"]=round(test_result[client_idx]['loss'], 2)
-            #print(f"[{client_idx} Client] Round: {n_round}, Loss: {round(test_result[client_idx]['loss'], 2)}, Acc: {round(test_result[client_idx]['acc']*100, 2)}%")
+    if n_round % eval_round == 0:
+        if DFL:
+            test_result = SCHEDULER.clients_test()
         
-        mean_acc = round(np.mean([client['acc'] for client in test_result])*100, 2)
-        mean_loss = round(np.mean([client['loss'] for client in test_result]), 2)
-        print(f"\n[Client Mean] Round: {n_round}, Loss: {mean_loss}, Acc: {mean_acc}%\n")
-        if WANDB:
-            wandb.log({"Test Acc": mean_acc, "Test Loss": mean_loss}, step=n_round)
+            for client_idx in range(NUM_CLIENT):
+                dict_df['Round'].append(n_round)
+                dict_df['Client'].append(client_idx)
+                dict_df['TestAcc'].append(round(test_result[client_idx]['acc']*100, 2))
+
+                # ===== All Client data update =====
+                #test_df[f"{client_idx}Client_acc"]=round(test_result[client_idx]['acc']*100, 2)
+                #test_df[f"{client_idx}Client_loss"]=round(test_result[client_idx]['loss'], 2)
+                #print(f"[{client_idx} Client] Round: {n_round}, Loss: {round(test_result[client_idx]['loss'], 2)}, Acc: {round(test_result[client_idx]['acc']*100, 2)}%")
             
-            # ===== All Clients data update =====
-            #wandb.log(test_df, step=n_round)
-            # Client's Mean data update
-
+            mean_acc = round(np.mean([client['acc'] for client in test_result])*100, 2)
+            mean_loss = round(np.mean([client['loss'] for client in test_result]), 2)
+            print(f"\n[Client Mean] Round: {n_round}, Loss: {mean_loss}, Acc: {mean_acc}%\n")
+            if WANDB:
+                wandb.log({"Test Acc": mean_acc, "Test Loss": mean_loss}, step=n_round)
+                
+                # ===== All Clients data update =====
+                #wandb.log(test_df, step=n_round)
+                # Client's Mean data update
+        else:
+            loss, acc = SCHEDULER.test()
+            dict_df['Round'].append(n_round)
+            dict_df['Client'] = 'Server'
+            dict_df['TestAcc'].append(round(acc*100, 2))
+            if WANDB:
+                wandb.log({"Test Acc": round(acc*100, 2), "Test Loss": round(loss, 2)}, step=n_round)
+               
 # ----- Result CSV load, wandb log-out ----- #
 df = pd.DataFrame(dict_df)
-os.makedirs('./csv_results', exist_ok=True)
-f_name = f'{time()}_Mo{args.model}_Data{args.dataset}_Pre{args.pre_trained}_R{args.n_rounds}_N{args.n_users}_E{args.n_epochs}_Split{args.split}.csv'
-df.to_csv(f'./csv_results/{f_name}')
+os.makedirs('../csv_results', exist_ok=True)
+f_name = f'Mo{args.model}_Data{args.dataset}_R{args.n_rounds}_N{args.n_users}_B{args.batch_size}_Split{args.split}.csv'
+df.to_csv(f'../csv_results/{f_name}')
 
 if WANDB:
-    wandb.save(f'./csv_results/{f_name}')
+    wandb.save(f'../csv_results/{f_name}')
     wandb.finish()
