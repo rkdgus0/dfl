@@ -1,0 +1,70 @@
+
+===== Init Model(Opt: sgd) & Dataset =====
+===== Time(sec): 6.56
+===== Init Models =====
+===== Time(sec): 1.9
+===== Init Parameters =====
+[INIT] ===== DFL Setting: False
+[INIT] ===== Total Round: 1000
+[INIT] ===== Total Client: 10
+[INIT] ===== Local Epoch: 1, Batch_size: 1024(Local update per user: 4)
+[INIT] ===== Model: resnet18(Pretrained : False, Opt: sgd)
+[INIT] ===== Learning rate: 0.05, learning rate decay: 0.99(round: 5)
+[INIT] ===== Dataset: cifar10, Data Split: diri
+[INIT] ===== Aggregation Method: Equal
+===== Global Round 1 Start! =====
+8/8 - 12s - loss: 2.5849 - 12s/epoch - 2s/step
+4/4 - 3s - loss: 2.5426 - 3s/epoch - 734ms/step
+5/5 - 2s - loss: 2.5872 - 2s/epoch - 309ms/step
+5/5 - 3s - loss: 2.7426 - 3s/epoch - 545ms/step
+8/8 - 4s - loss: 2.6666 - 4s/epoch - 480ms/step
+4/4 - 3s - loss: 2.6142 - 3s/epoch - 793ms/step
+5/5 - 3s - loss: 2.3770 - 3s/epoch - 685ms/step
+4/4 - 3s - loss: 2.8607 - 3s/epoch - 816ms/step
+6/6 - 4s - loss: 2.8094 - 4s/epoch - 705ms/step
+5/5 - 2s - loss: 2.4394 - 2s/epoch - 499ms/step
+313/313 - 4s - loss: 177.5902 - categorical_accuracy: 0.1007 - 4s/epoch - 13ms/step
+===== Global Round 2 Start! =====
+8/8 - 2s - loss: 2.6620 - 2s/epoch - 207ms/step
+4/4 - 1s - loss: 2.7170 - 807ms/epoch - 202ms/step
+5/5 - 1s - loss: 2.6751 - 940ms/epoch - 188ms/step
+5/5 - 1s - loss: 2.8207 - 1s/epoch - 202ms/step
+8/8 - 2s - loss: 2.6979 - 2s/epoch - 216ms/step
+4/4 - 1s - loss: 2.9312 - 826ms/epoch - 207ms/step
+5/5 - 1s - loss: 2.2414 - 1s/epoch - 209ms/step
+4/4 - 1s - loss: 2.8546 - 825ms/epoch - 206ms/step
+6/6 - 1s - loss: 2.9476 - 1s/epoch - 220ms/step
+5/5 - 1s - loss: 2.1518 - 983ms/epoch - 197ms/step
+===== Global Round 3 Start! =====
+8/8 - 2s - loss: 2.6884 - 2s/epoch - 203ms/step
+4/4 - 1s - loss: 2.7458 - 815ms/epoch - 204ms/step
+5/5 - 1s - loss: 2.6766 - 943ms/epoch - 189ms/step
+5/5 - 1s - loss: 2.8332 - 1s/epoch - 201ms/step
+8/8 - 2s - loss: 2.7079 - 2s/epoch - 215ms/step
+4/4 - 1s - loss: 3.0919 - 815ms/epoch - 204ms/step
+5/5 - 1s - loss: 2.2312 - 1s/epoch - 210ms/step
+4/4 - 1s - loss: 2.8815 - 829ms/epoch - 207ms/step
+6/6 - 1s - loss: 3.0166 - 1s/epoch - 223ms/step
+5/5 - 1s - loss: 2.0701 - 982ms/epoch - 196ms/step
+===== Global Round 4 Start! =====
+8/8 - 2s - loss: 2.7064 - 2s/epoch - 203ms/step
+4/4 - 1s - loss: 2.7485 - 807ms/epoch - 202ms/step
+5/5 - 1s - loss: 2.6710 - 940ms/epoch - 188ms/step
+5/5 - 1s - loss: 2.8421 - 1s/epoch - 200ms/step
+8/8 - 2s - loss: 2.7129 - 2s/epoch - 214ms/step
+4/4 - 1s - loss: 3.2011 - 825ms/epoch - 206ms/step
+5/5 - 1s - loss: 2.2246 - 1s/epoch - 217ms/step
+4/4 - 1s - loss: 2.9011 - 825ms/epoch - 206ms/step
+6/6 - 1s - loss: 3.0631 - 1s/epoch - 219ms/step
+5/5 - 1s - loss: 2.0190 - 981ms/epoch - 196ms/step
+===== Global Round 5 Start! =====
+8/8 - 7s - loss: 2.7232 - 7s/epoch - 858ms/step
+4/4 - 1s - loss: 2.7458 - 808ms/epoch - 202ms/step
+5/5 - 1s - loss: 2.6658 - 948ms/epoch - 190ms/step
+5/5 - 1s - loss: 2.8543 - 1s/epoch - 201ms/step
+8/8 - 2s - loss: 2.7194 - 2s/epoch - 214ms/step
+4/4 - 1s - loss: 3.2882 - 818ms/epoch - 204ms/step
+5/5 - 1s - loss: 2.2203 - 1s/epoch - 209ms/step
+4/4 - 1s - loss: 2.9192 - 826ms/epoch - 207ms/step
+6/6 - 1s - loss: 3.1009 - 1s/epoch - 219ms/step
+5/5 - 1s - loss: 1.9818 - 977ms/epoch - 195ms/step

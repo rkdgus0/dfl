@@ -1,0 +1,54 @@
+
+===== Init Model(Opt: sgd) & Dataset =====
+===== Time(sec): 7.24
+===== Init Models =====
+===== Time(sec): 1.88
+===== Init Parameters =====
+[INIT] ===== DFL Setting: True
+[INIT] ===== Total Round: 1000
+[INIT] ===== Total Client: 10
+[INIT] ===== Local Epoch: 1, Batch_size: 1024(Local update per user: 4)
+[INIT] ===== Model: resnet18(Pretrained : False, Opt: sgd)
+[INIT] ===== Learning rate: 0.075, learning rate decay: 0.99(round: 5)
+[INIT] ===== Dataset: cifar10, Data Split: diri
+[INIT] ===== Aggregation Method: Equal
+===== Global Round 1 Start! =====
+8/8 - 12s - loss: 2.4939 - 12s/epoch - 2s/step
+4/4 - 3s - loss: 2.4555 - 3s/epoch - 781ms/step
+5/5 - 2s - loss: 2.5377 - 2s/epoch - 380ms/step
+5/5 - 3s - loss: 2.6395 - 3s/epoch - 618ms/step
+8/8 - 5s - loss: 2.5872 - 5s/epoch - 573ms/step
+4/4 - 3s - loss: 2.4809 - 3s/epoch - 830ms/step
+5/5 - 4s - loss: 2.2762 - 4s/epoch - 753ms/step
+4/4 - 3s - loss: 2.7652 - 3s/epoch - 844ms/step
+6/6 - 5s - loss: 2.7011 - 5s/epoch - 775ms/step
+5/5 - 3s - loss: 2.3795 - 3s/epoch - 570ms/step
+===== Connected Clients =====
+0-Client: [0, 2, 3, 4, 7, 8]
+1-Client: [1, 2, 3, 5, 7]
+2-Client: [0, 1, 2, 8]
+3-Client: [0, 1, 3, 4, 6, 7, 8]
+4-Client: [0, 3, 4, 5, 6, 7, 8]
+5-Client: [1, 4, 5, 6, 7]
+6-Client: [3, 4, 5, 6]
+7-Client: [0, 1, 3, 4, 5, 7, 9]
+8-Client: [0, 2, 3, 4, 8]
+9-Client: [7, 9]
+WARNING:absl:Skipping variable loading for optimizer 'RMSprop', because it has 85 variables whereas the saved optimizer has 1 variables.
+313/313 - 4s - loss: 89.0054 - categorical_accuracy: 0.1066 - 4s/epoch - 14ms/step
+WARNING:absl:Skipping variable loading for optimizer 'RMSprop', because it has 85 variables whereas the saved optimizer has 1 variables.
+313/313 - 4s - loss: 100.1805 - categorical_accuracy: 0.1056 - 4s/epoch - 14ms/step
+WARNING:absl:Skipping variable loading for optimizer 'RMSprop', because it has 85 variables whereas the saved optimizer has 1 variables.
+313/313 - 4s - loss: 98.2992 - categorical_accuracy: 0.0988 - 4s/epoch - 12ms/step
+WARNING:absl:Skipping variable loading for optimizer 'RMSprop', because it has 85 variables whereas the saved optimizer has 1 variables.
+313/313 - 4s - loss: 82.0935 - categorical_accuracy: 0.1238 - 4s/epoch - 13ms/step
+WARNING:absl:Skipping variable loading for optimizer 'RMSprop', because it has 85 variables whereas the saved optimizer has 1 variables.
+313/313 - 4s - loss: 80.0879 - categorical_accuracy: 0.1373 - 4s/epoch - 13ms/step
+WARNING:absl:Skipping variable loading for optimizer 'RMSprop', because it has 85 variables whereas the saved optimizer has 1 variables.
+313/313 - 4s - loss: 88.6066 - categorical_accuracy: 0.1004 - 4s/epoch - 12ms/step
+WARNING:absl:Skipping variable loading for optimizer 'RMSprop', because it has 85 variables whereas the saved optimizer has 1 variables.
+313/313 - 4s - loss: 130.7385 - categorical_accuracy: 0.1044 - 4s/epoch - 12ms/step
+WARNING:absl:Skipping variable loading for optimizer 'RMSprop', because it has 85 variables whereas the saved optimizer has 1 variables.
+313/313 - 4s - loss: 68.5343 - categorical_accuracy: 0.1243 - 4s/epoch - 13ms/step
+WARNING:absl:Skipping variable loading for optimizer 'RMSprop', because it has 85 variables whereas the saved optimizer has 1 variables.
+313/313 - 4s - loss: 78.3462 - categorical_accuracy: 0.1052 - 4s/epoch - 13ms/step

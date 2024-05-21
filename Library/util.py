@@ -32,8 +32,8 @@ def arg_parsing():
     parser.add_argument("-pre_trained", action='store_true')
     parser.add_argument("-lr", type=float, default=0.075)
     parser.add_argument("-batch_size", type=int, default=32)
-    parser.add_argument("-lr_decay", type=float, default=0.99)
-    parser.add_argument("-lr_decay_round", type=int, default=5)
+    parser.add_argument("-lr_decay", type=float)
+    parser.add_argument("-lr_decay_round", type=int)
 
     # ----- Data Setting ----- #
     parser.add_argument("-dataset", type=str, default='cifar10', choices=DATA_LIST)

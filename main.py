@@ -148,10 +148,10 @@ for n_round in range(1, ROUND+1):
                
 # ----- Result CSV load, wandb log-out ----- #
 df = pd.DataFrame(dict_df)
-os.makedirs('../csv_results', exist_ok=True)
+os.makedirs('/home/gang/dfl/csv_results', exist_ok=True)
 f_name = f'Mo{args.model}_Data{args.dataset}_R{args.n_rounds}_N{args.n_users}_B{args.batch_size}_Split{args.split}.csv'
-df.to_csv(f'../csv_results/{f_name}')
+df.to_csv(f'/home/gang/dfl/csv_results/{f_name}')
 
 if WANDB:
-    wandb.save(f'../csv_results/{f_name}')
+    wandb.save(f'/home/gang/dfl/csv_results/{f_name}')
     wandb.finish()
