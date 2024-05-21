@@ -50,6 +50,6 @@ class CLIENT(BASE):
             optimizer = keras.optimizers.SGD(learning_rate=lr, clipvalue=1.0)
             
         elif self.opt == 'adam':
-            optimizer=keras.optimizers.Adam(learning_rate=lr, clipvalue=1.0)
+            optimizer = keras.optimizers.Adam(learning_rate=lr, clipvalue=1.0)
         
         self.model.compile(loss=keras.losses.CategoricalCrossentropy(), optimizer=optimizer)

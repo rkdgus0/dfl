@@ -11,10 +11,7 @@ from Library.Model.lenet import McMahanTwoNN, McMahanCNN
 
 def define_model(args):
     model_name = args.model.lower()
-
-    if args.gpu_id:
-        tf.config.experimental.set_visible_devices(tf.config.list_physical_devices('GPU')[args.gpu_id], 'GPU')
-
+    
     if args.pre_trained:
         weight = 'imagenet'
     else:

@@ -19,18 +19,18 @@ from Library.models import *
 
 import wandb
 
+args = arg_parsing()
+
+# ----- GPU Setting ----- #
+if args.gpu_id:
+    tf.config.experimental.set_visible_devices(tf.config.list_physical_devices('GPU')[args.gpu_id], 'GPU')
+
 # ----- Seed fix ----- #
 seed_num = 0
 np.random.seed(seed_num)
 random.seed(seed_num)
 tf.random.set_seed(seed_num)
 keras.src.utils.set_random_seed(seed_num)
-
-args = arg_parsing()
-
-# ----- GPU Setting ----- #
-if args.gpu_id:
-    tf.config.experimental.set_visible_devices(tf.config.list_physical_devices('GPU')[args.gpu_id], 'GPU')
 
 # ----- Wandb Setting ----- #
 # Wandb Debug Setting
