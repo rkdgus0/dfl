@@ -1,0 +1,37 @@
+
+===== Init Model(Opt: sgd) & Dataset =====
+===== Time(sec): 6.75
+===== Init Models =====
+===== Time(sec): 0.33
+===== Init Parameters =====
+[INIT] ===== DFL Setting: False
+[INIT] ===== Total Round: 1000
+[INIT] ===== Total Client: 10
+[INIT] ===== Local Epoch: 1, Batch_size: 512(Local update per user: 9)
+[INIT] ===== Model: mcmahanCNN(Pretrained : False, Opt: sgd)
+[INIT] ===== Learning rate: 0.01, learning rate decay: None(round: None)
+[INIT] ===== Dataset: cifar10, Data Split: diri
+[INIT] ===== Aggregation Method: n_data
+===== Global Round 1 Start! =====
+15/15 - 3s - loss: 351.0667 - 3s/epoch - 167ms/step
+8/8 - 0s - loss: 1251.7356 - 147ms/epoch - 18ms/step
+9/9 - 0s - loss: 1135.4939 - 170ms/epoch - 19ms/step
+9/9 - 0s - loss: 912.7199 - 297ms/epoch - 33ms/step
+16/16 - 0s - loss: 733.7109 - 267ms/epoch - 17ms/step
+8/8 - 0s - loss: 805.7159 - 177ms/epoch - 22ms/step
+10/10 - 0s - loss: 584.4907 - 214ms/epoch - 21ms/step
+8/8 - 0s - loss: 910.5947 - 197ms/epoch - 25ms/step
+12/12 - 0s - loss: 379.7816 - 307ms/epoch - 26ms/step
+9/9 - 0s - loss: 1024.7726 - 275ms/epoch - 31ms/step
+Traceback (most recent call last):
+  File "/home/gang/dfl/main.py", line 103, in <module>
+    SCHEDULER.FL_train()
+  File "/home/gang/dfl/component/SCHEDULER.py", line 46, in FL_train
+    self.model.set_weights(self.average_model(model_weights, avg_ratio))
+  File "/home/gang/dfl/component/BASE_MODEL.py", line 19, in average_model
+    np.array([np.average(np.array(w), weights=avg_ratio, axis=0) for w in zip(*weights_list_tuple)])
+  File "/home/gang/dfl/component/BASE_MODEL.py", line 19, in <listcomp>
+    np.array([np.average(np.array(w), weights=avg_ratio, axis=0) for w in zip(*weights_list_tuple)])
+  File "/home/gang/miniconda3/envs/fl/lib/python3.9/site-packages/numpy/lib/function_base.py", line 541, in average
+    raise ValueError(
+ValueError: Length of weights not compatible with specified axis.
